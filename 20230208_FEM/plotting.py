@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_1D_mesh(node_list, element_list):
-    fig, ax = plt.subplots(2,1, sharex=True)
+def plot_1D_mesh(node_list: np.ndarray, element_list: list):
+    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
     for idx, node in enumerate(node_list):
         ax[0].scatter(node, 0)
         ax[0].annotate(idx, (node, 0))
@@ -15,6 +15,26 @@ def plot_1D_mesh(node_list, element_list):
         ax[1].set_title("Elements")
 
     plt.xlabel("$x$")
+    plt.show()
+
+
+def plot_2D_mesh(node_list: np.ndarray, element_list: list) -> None:
+    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+    for idx, node in enumerate(node_list):
+        ax[0].scatter(*node)
+        ax[1].scatter(*node, c="black")
+        ax[0].annotate(idx, node)
+        ax[0].set_title("Nodes")
+        ax[0].set_xlabel("$x$")
+        ax[0].set_ylabel("$y$")
+
+    for idx, element in enumerate(element_list):
+        ax[1].plot(node_list[element + element[:1], 0], node_list[element + element[:1], 1], alpha=0.5)
+        ax[1].annotate(idx, np.mean(node_list[element], axis=0))
+        ax[1].set_title("Elements")
+        ax[1].set_xlabel("$x$")
+        ax[1].set_ylabel("$y$")
+
     plt.show()
 
 
